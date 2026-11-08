@@ -1,0 +1,39 @@
+# Python and development environments
+__pycache__/
+*.py[cod]
+.venv/
+.venv-build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local demo data and logs
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+.kivy/
+work/
+
+# Build output and signing material
+.buildozer/
+bin/
+*.apk
+*.aab
+*.jks
+*.keystore
+*.pem
+*.p12
+.env
+.env.*
+local.properties
+
+# Editors and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
