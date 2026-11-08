@@ -1,0 +1,2 @@
+# Desktop UI. The wallet core and its unit tests use only Python's standard library.
+Kivy==2.3.1

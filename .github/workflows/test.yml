@@ -1,0 +1,47 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wallet:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Test wallet rules and persistence
+        run: python -m unittest discover -s tests -v
+
+  interface:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install graphical test dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xauth libgl1-mesa-dri libgl1-mesa-glx libmtdev1
+          python -m pip install -r requirements.txt
+      - name: Exercise the interface
+        env:
+          KIVY_NO_ARGS: '1'
+          KIVY_NO_CONSOLELOG: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python tests/ui_smoke.py
